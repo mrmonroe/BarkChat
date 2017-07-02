@@ -1,0 +1,34 @@
+{
+  "name": "DevTeamChat",
+  "version": "1.0.0",
+  "description": "A terminal chat application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "client": "npm run build && node ./lib/client/app.js",
+    "server": "npm run build && node ./lib/server.js",
+    "lint": "./node_modules/eslint/bin/eslint.js ./src/* ",
+    "lint:fix": "./node_modules/eslint/bin/eslint.js --fix ./src/* "
+  },
+  "author": "Matt Monroe",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-env": "^1.5.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.6.1",
+    "eslint-plugin-jsx-a11y": "^5.1.0",
+    "eslint-plugin-react": "^7.1.0"
+  },
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "dateformat": "^2.0.0",
+    "fullname": "^3.3.0",
+    "terminal-kit": "^1.11.0",
+    "ws": "^3.0.0"
+  }
+}
