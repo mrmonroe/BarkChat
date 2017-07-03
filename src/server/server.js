@@ -3,6 +3,7 @@ import fs from 'fs';
 import config from 'config';
 import dateFormat from 'dateformat';
 
+const currentUsers = [];
 const serverCfg = config.get('Server.srvConfig');
 
 const wss = new WebSocket.Server({
@@ -27,17 +28,70 @@ function toLog(text) {
     }
   });
 }
+/**
+ * Logs an sends data through the socket
+ * @param {Object} client - Client to which the message is sent
+ * @param {object} data - Obkect containing message data
+ * @returns {Boolean} True if succesful
+ */
+function sendData(client, data) {
+  toLog(`${data},\n`);
+  client.send(JSON.stringify(data));
+  return true;
+}
+/**
+ * Builds the command results message
+ * @param {object} data - Object containing message data
+ * @returns {object|boolean} The msg object or false if nothinf to return
+ */
+function parseCommand(data) {
+  switch (data.text) {
+    case '##names': {
+      const msg = {
+        type: 'message',
+        name: 'Server',
+        text: currentUsers,
+      };
+      return msg;
+    }
+    default: {
+      return false;
+    }
+
+
+  }
+}
 
 wss.on('connection', (ws) => {
-  ws.send(`You are connected! # of current guests: ${wss.clients.size}`);
   ws.on('message', (data) => {
-    // Broadcast to everyone else.
-    wss.clients.forEach((client) => {
-      toLog(`${data}\n`);
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(data);
-        console.log('everyone:', data);
+    let msg = '';
+    const rcv = JSON.parse(data);
+    switch (rcv.type) {
+      case 'connect': {
+        currentUsers.push(rcv.name);
+        const txt = `You are connected! # of current guests: ${wss.clients.size}`;
+        msg = {
+          type: 'message',
+          name: 'Server',
+          text: txt,
+        };
+        sendData(ws, msg);
+        break;
       }
-    });
+      case 'command': {
+        msg = parseCommand(rcv);
+        sendData(ws, msg);
+        break;
+      }
+      default: {
+        wss.clients.forEach((client) => {
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            sendData(client, data);
+            console.log('everyone:', data);
+          }
+        });
+        break;
+      }
+    }
   });
 });

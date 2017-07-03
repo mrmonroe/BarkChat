@@ -10,13 +10,21 @@ let userName = '';
  */
 fullname().then((name) => { userName = name; });
 /**
+ * Creates formatted date string
+ * @return {string} The formatted date string
+ */
+function getDate() {
+  const time = new Date();
+  return dateFormat(time, 'mm/dd/yy hh:MM:ss');
+}
+/**
  * Builds the prompt added to the screen when a message is appended
+ * @param {string} name - The username of the client
  * @return {string} prompt - The final prompt text to be diplayed
  */
-function getPrompt() {
-  const time = new Date();
-  const ft = dateFormat(time, 'mm/dd/yy hh:MM');
-  const prompt = `${ft}: ${userName} -> `;
+function getPrompt(name) {
+  const ft = getDate();
+  const prompt = `${ft}: ${name} -> `;
   return prompt;
 }
 
@@ -25,11 +33,17 @@ const client = new WebSocket('ws://localhost:3302', {
 });
 
 client.on('open', () => {
-  client.send(`name::${userName}`);
+  const msg = {
+    type: 'connect',
+    name: userName,
+    timestamp: getDate(),
+  };
+  client.send(JSON.stringify(msg));
 });
 
 client.on('message', (data) => {
-  outputBox.insertBottom(data);
+  const rcv = JSON.parse(data);
+  outputBox.insertBottom(getPrompt(rcv.name) + rcv.text);
   screen.render();
 });
 
@@ -41,8 +55,20 @@ client.on('terminate', () => {
 input.key(['C-c'], () => { process.exit(0); });
 // Quit on Escape, q, or Control-C.
 input.key(['enter'], () => {
-  outputBox.insertBottom(`{green-fg}${getPrompt()}{/green-fg}${input.value.trim()}`);
-  client.send(getPrompt() + input.value.trim(), (error) => {
+  const txt = input.value.trim();
+  outputBox.insertBottom(`{green-fg}${getPrompt(userName)}{/green-fg}${txt}`);
+  let msgType = 'message';
+  if (txt.search('##') !== -1) {
+    msgType = 'command';
+  }
+  const msg = {
+    type: msgType,
+    name: userName,
+    text: txt,
+    timestamp: getDate(),
+  };
+
+  client.send(JSON.stringify(msg), (error) => {
     if (error) {
       console.log(error);
     }
