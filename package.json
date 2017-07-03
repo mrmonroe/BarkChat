@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
-    "client": "npm run build && node ./lib/client/app.js",
-    "server": "npm run build && node ./lib/server.js",
+    "client": "rm -rf ./lib && npm run build && node ./lib/client/app.js",
+    "server": "rm -rf ./lib && npm run build && node ./lib/server/server.js",
     "lint": "./node_modules/eslint/bin/eslint.js ./src/* ",
     "lint:fix": "./node_modules/eslint/bin/eslint.js --fix ./src/* "
   },
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "blessed": "^0.1.81",
+    "config": "^1.26.1",
     "dateformat": "^2.0.0",
     "fullname": "^3.3.0",
     "terminal-kit": "^1.11.0",
