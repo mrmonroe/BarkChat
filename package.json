@@ -4,7 +4,7 @@
   "description": "A terminal chat application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --compilers js:babel-core/register",
     "build": "babel src -d lib",
     "client": "rm -rf ./lib && npm run build && node ./lib/client/app.js",
     "server": "rm -rf ./lib && npm run build && node ./lib/server/server.js",
@@ -14,6 +14,7 @@
   "author": "Matt Monroe",
   "license": "ISC",
   "devDependencies": {
+    "assert": "^1.4.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
@@ -22,7 +23,9 @@
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.6.1",
     "eslint-plugin-jsx-a11y": "^5.1.0",
-    "eslint-plugin-react": "^7.1.0"
+    "eslint-plugin-react": "^7.1.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2"
   },
   "dependencies": {
     "blessed": "^0.1.81",

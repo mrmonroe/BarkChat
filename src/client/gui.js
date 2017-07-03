@@ -9,10 +9,6 @@ const screen = Blessed.screen({
 const outputBox = Blessed.box({
   fg: 'white',
   bg: 'default',
-  border: {
-    type: 'dotted',
-    fg: '#cccccc',
-  },
   tags: true,
   width: '100%',
   height: '80%',
