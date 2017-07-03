@@ -25,7 +25,7 @@ const client = new WebSocket('ws://localhost:3302', {
 });
 
 client.on('open', () => {
-  client.send(`${getPrompt()}Connected`);
+  client.send(`name::${userName}`);
 });
 
 client.on('message', (data) => {

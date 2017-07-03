@@ -1,13 +1,13 @@
 import WebSocket from 'ws';
 import fs from 'fs';
-import config from 'config'
+import config from 'config';
 import dateFormat from 'dateformat';
-//...
+
 const serverCfg = config.get('Server.srvConfig');
 
 const wss = new WebSocket.Server({
   host: serverCfg.host,
-  port: serverCfg.port
+  port: serverCfg.port,
 });
 console.log(`\n\nBarkChat server has started ws://${serverCfg.host}:${serverCfg.port}`);
 /**
@@ -17,9 +17,9 @@ console.log(`\n\nBarkChat server has started ws://${serverCfg.host}:${serverCfg.
  * @returns {Boolean} True if succesful
  */
 function toLog(text) {
-    const ft = dateFormat(new Date, 'yyyy_mm_dd');
-  const fileName = `logs/${ft}_chat.log`
-  fs.appendFile(fileName, text, {'flags': 'a+'},(err) => {
+  const ft = dateFormat(new Date(), 'yyyy_mm_dd');
+  const fileName = `logs/${ft}_chat.log`;
+  fs.appendFile(fileName, text, { flags: 'a+' }, (err) => {
     if (err) {
       throw err;
     } else {

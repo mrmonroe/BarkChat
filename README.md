@@ -1,6 +1,6 @@
-# arkChat
+# BarkChat
 
-arkChat was built to provide my current development team a team chat environment that is fully customizable an accepted by our security office
+BarkChat was built to provide my current development team a team chat environment that is fully customizable an accepted by our security office
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ Node JS and NPM
 Clone github repository
 
 ```
-git clone https://github.com/mrmonroe/arkChat.git
+git clone https://github.com/mrmonroe/BarkChat.git
 ```
 
 Install dependencies
