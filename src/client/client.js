@@ -2,12 +2,12 @@ import WebSocket from 'ws';
 import fullname from 'fullname';
 import dateFormat from 'dateformat';
 import { screen, inputBox, outputBox, input } from './gui';
-
+let userName = '';
 /**
  * Finds the full name of the user logged into the computer
  * @return {string} name - =The full name of the logged in user
  */
-const userName = fullname().then(name => name);
+ fullname().then((name) => {userName = name});
 /**
  * Builds the prompt added to the screen when a message is appended
  * @return {string} prompt - The final prompt text to be diplayed
