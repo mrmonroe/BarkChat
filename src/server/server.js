@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import fs from 'fs';
 import config from 'config';
 import dateFormat from 'dateformat';
-// ...
+
 const serverCfg = config.get('Server.srvConfig');
 
 const wss = new WebSocket.Server({

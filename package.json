@@ -4,7 +4,7 @@
   "description": "A terminal chat application",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --compilers js:babel-core/register",
+    "test": "mocha --compilers js:babel-core/register",
     "build": "babel src -d lib",
     "client": "rm -rf ./lib && npm run build && node ./lib/client/app.js",
     "server": "rm -rf ./lib && npm run build && node ./lib/server/server.js",

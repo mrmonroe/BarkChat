@@ -18,10 +18,6 @@ const outputBox = Blessed.box({
 const inputBox = Blessed.box({
   fg: 'blue',
   bg: 'default',
-  border: {
-    type: 'dotted',
-    fg: '#cccccc',
-  },
   tags: true,
   width: '100%',
   height: '20%',
@@ -32,15 +28,13 @@ const inputBox = Blessed.box({
 const input = Blessed.textarea({
   parent: inputBox,
   bottom: 0,
-  height: 3,
+  height: 1,
+  cursor: 'underline',
   inputOnFocus: true,
   mouse: true,
-  border: {
-    type: 'line',
-    fg: '#ffffff',
-  },
   style: {
     fg: '#00ff00',
+    underline: true,
   },
 });
 
