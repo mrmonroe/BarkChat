@@ -3,12 +3,19 @@ import fs from 'fs';
 
 const wss = new WebSocket.Server({ port: 3302 });
 
+/**
+ * Writes text to the chat.log
+ * @param {String} text - The text to write to the file
+ * @throws {String} err - Error from writing to file
+ * @returns {Boolean} True if succesful
+ */
 function toLog(text) {
   fs.appendFile('chat.log', text, (err) => {
     if (err) {
-      return console.log(err);
+      throw err;
+    } else {
+      return true;
     }
-    if (err) throw err;
   });
 }
 
